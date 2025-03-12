@@ -34,6 +34,7 @@ class AuthManager extends Controller
         ]); 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
             return redirect()->route('dashboard');
         }
         
