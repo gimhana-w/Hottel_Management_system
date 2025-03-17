@@ -1,53 +1,13 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
-  <!-- Container wrapper -->
-  <div class="container">
-    <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="https://mdbgo.com/">
-      <img
-        src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-        height="16"
-        alt="MDB Logo"
-        loading="lazy"
-        style="margin-top: -1px;"
-      />
-    </a>
-
-    <!-- Toggle button -->
-    <button
-      data-mdb-collapse-init
-      class="navbar-toggler"
-      type="button"
-      data-mdb-target="#navbarButtonsExample"
-      aria-controls="navbarButtonsExample"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarButtonsExample">
-      <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-      </ul>
-      <!-- Left links -->
-
-      <div class="d-flex align-items-center">
-        <button onclick="window.location.href='{{ route('login') }}'" class="btn btn-primary me-3">
-          Login
-        </button>
-        <button onclick="window.location.href='{{ route('register') }}'" class="btn btn-primary me-3">
-          Sign up for free
-        </button>
-      </div>
-    </div>
-    <!-- Collapsible wrapper -->
-  </div>
-  <!-- Container wrapper -->
-</nav>
-<!-- Navbar -->
-
+<div class="flex-grow-1" style="">
+        <div class="container-fluid">
+            <header class="bg-white p-3 mb-3 shadow-sm d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <div class="w-50 w-md-25 mb-2 mb-md-0">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </div>
+                <div class="d-flex align-items-center">
+                    <a href="{{ route('logout') }}" class="btn btn-danger">Logout</a>
+                </div>
+            </header>
+          </div>
+         </div> 
+</div>         
