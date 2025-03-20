@@ -31,6 +31,8 @@ class RoomController extends Controller
             'capacity' => 'required|integer',
         ]);
 
+        
+
         Room::create($request->all());
         return redirect()->route('rooms.index')->with('success', 'Room added successfully!');
     }
