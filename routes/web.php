@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthManager;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoomController;
-
+use App\Http\Controllers\RoleController;
 
 
 Route::get('/', [AuthManager::class, 'home'])->name('dashborde');
@@ -20,4 +20,6 @@ Route::post('/rooms/store', [RoomController::class, 'store'])->name('rooms.store
 Route::get('/rooms/edit/{room}', [RoomController::class, 'edit'])->name('rooms.edit');
 Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');
 Route::delete('/rooms/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
+Route::resource('roles',RoleController::class);
+
 

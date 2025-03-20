@@ -24,6 +24,13 @@
             <i class="bi bi-puzzle me-2"></i>Room Panel
             </a>
             </li>
+            <li class="nav-item">
+            <a href="{{ route('roles.index') }}" 
+               class="nav-link {{ request()->routeIs('roles.index') ? 'active bg-primary text-white' : 'text-white' }} py-3" 
+               aria-current="page">
+            <i class="bi bi-puzzle me-2"></i>Manage Role
+            </a>
+            </li>
         <li class="nav-item">
             <a href="#" class="nav-link text-white py-3">
                 <i class="bi bi-puzzle me-2"></i>Components
