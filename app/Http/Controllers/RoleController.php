@@ -46,7 +46,8 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $role = Role::findById($id);
+        return view('roles.show', compact('role'));
     }
 
     /**
@@ -64,7 +65,17 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request ->validate([
+            "name" => "required"
         
+        ]);
+        $role = Role::findById($id);
+        $role->name = $request->name;
+        $role->save(); 
+        
+        $role->syncPermissions($request->permissions);
+
+        return redirect()->route("roles.index")->with("success", "Role update successfully!"); 
     }
 
     /**
@@ -72,6 +83,8 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $role = Role::findById($id);
+        $role->delete();
+        return redirect()->route("roles.index")->with("success", "Role deleted successfully!");
     }
 }
