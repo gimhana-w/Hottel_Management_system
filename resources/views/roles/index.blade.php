@@ -34,6 +34,7 @@
                 <td>{{ $roles->id }}</td>
                 <td>{{ $roles->name }}</td>
                 <td>
+                    <a href="{{ route('roles.edit', $roles->id) }}" class="btn ">Edit</a>
                     <a href="{{ route('roles.edit', $roles->id) }}" class="btn btn-warning">Edit</a>
                     <form action="{{ route('roles.destroy', $roles->id) }}" method="POST" style="display:inline;">
                         @csrf

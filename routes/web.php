@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthManager;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 
 Route::get('/', [AuthManager::class, 'home'])->name('dashborde');
@@ -21,5 +22,6 @@ Route::get('/rooms/edit/{room}', [RoomController::class, 'edit'])->name('rooms.e
 Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');
 Route::delete('/rooms/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
 Route::resource('roles',RoleController::class);
+Route::resource('users',UserController::class);
 
 
