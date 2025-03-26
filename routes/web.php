@@ -7,6 +7,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
 
 Route::get('/', [AuthManager::class, 'home'])->name('dashborde');
 Route::get('/login', [AuthManager::class, 'login'])->name('login');
@@ -23,5 +24,6 @@ Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.upda
 Route::delete('/rooms/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
 Route::resource('roles',RoleController::class);
 Route::resource('users',UserController::class);
+
 
 

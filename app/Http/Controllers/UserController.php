@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+
 
 class UserController extends Controller
 {
@@ -12,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index');
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -20,6 +25,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $roles = Role::all();
+        return view('user.create', compact('roles'));
         
     }
 
@@ -28,8 +35,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required'
+        ]); 
+        
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        $user ->syncroles($request->roles);
+        
+        return redirect()->route('user.index')->with('success', 'User created successfully');
     }
+     
+    
 
     /**
      * Display the specified resource.
@@ -44,7 +67,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id); 
+        $roles = Role::all();// Fetch the user by ID
+
+    return view('user.edit', compact('user', 'roles'));
+
     }
 
     /**
@@ -52,7 +79,21 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'required',
+        ]);
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+
+        $user->save();
+ $user ->syncroles($request->roles);
+
+        return redirect()->route('user.index')->with('success', 'User updated successfully!');
     }
 
     /**
