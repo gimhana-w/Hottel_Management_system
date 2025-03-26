@@ -17,6 +17,14 @@
                 <i class="bi bi-house-door me-2"></i>Dashboard
             </a>
          </li>
+            </li>
+            <li class="nav-item">
+            <a href="{{ route('user.index') }}" 
+               class="nav-link {{ request()->routeIs('user.index') ? 'active bg-primary text-white' : 'text-white' }} py-3" 
+               aria-current="page">
+            <i class="bi bi-puzzle me-2"></i>Users
+            </a>
+            </li>
             <li class="nav-item">
             <a href="{{ route('rooms.index') }}" 
                class="nav-link {{ request()->routeIs('rooms.index') ? 'active bg-primary text-white' : 'text-white' }} py-3" 
@@ -30,12 +38,7 @@
                aria-current="page">
             <i class="bi bi-puzzle me-2"></i>Manage Role
             </a>
-            </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white py-3">
-                <i class="bi bi-puzzle me-2"></i>Components
-            </a>
-        </li>
+           
         <li class="nav-item">
             <a href="#" class="nav-link text-white py-3">
                 <i class="bi bi-input-cursor-text me-2"></i>Forms
