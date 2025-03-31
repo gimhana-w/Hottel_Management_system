@@ -14,7 +14,9 @@
                             <div class="card-body">
                                 <div class="container">
                                 <h2>Room Management</h2>
+                                @can('room-create')
                                  <a href="{{ route('rooms.create') }}" class="btn btn-primary">Add Room</a>
+                                @endcan
 
         @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -40,11 +42,16 @@
                 <td>{{ $room->capacity }}</td>
                 <td>{{ $room->is_available ? 'Yes' : 'No' }}</td>
                 <td>
+                    @can('room-edit')
                     <a href="{{ route('rooms.edit', $room->id) }}" class="btn btn-warning">Edit</a>
+                    @endcan
+
+                    @can('room-delete')
                     <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    @endcan
                     </form>
                 </td>
             </tr>

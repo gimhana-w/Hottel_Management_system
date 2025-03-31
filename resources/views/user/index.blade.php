@@ -14,7 +14,9 @@
                             <div class="card-body">
                                 <div class="container">
                                 <h2>Users Management</h2>
+                                @can('user-create')
                                  <a href="{{ route('users.create') }}" class="btn btn-primary">Add User</a>
+                                @endcan
 
         @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -37,16 +39,22 @@
                 <td>{{ $users->name }}</td>
                 <td>{{ $users->email }}</td>
                 <td>
+                    
                     @foreach($users->getRoleNames() as $role)
                     <button class="btn btn-success btn-sm">{{ $role }}</button>
                     @endforeach
                 </td>
                 <td>
+                    @can('user-edit')
                     <a href="{{ route('users.edit', $users->id) }}" class="btn btn-warning">Edit</a>
+                    @endcan
+
+                    @can('user-delete')
                     <form action="{{ route('users.destroy', $users->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    @endcan
                     </form>
                 </td>
             </tr>
