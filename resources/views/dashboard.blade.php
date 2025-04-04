@@ -1,7 +1,6 @@
 @extends('layout')
 @section('title', 'Dashboard')
 @section('content')
-@can('viwe-dashbord')
 <div class="d-flex">
     <!-- Sidebar -->
     @include('include.sidebar')
@@ -234,7 +233,5 @@
             }
         });
     </script>
-@endcan
 @endpush
 
-@endsection

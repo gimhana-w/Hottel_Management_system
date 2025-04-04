@@ -13,12 +13,43 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $permission = [
-         
-            "viwe-dashbord"
+        $permissions = [
+            // Dashboard permissions
+            "view-dashboard",
+            
+            // User permissions
+            "user-create",
+            "user-edit",
+            "user-delete",
+            "user-view",
+            
+            // Role permissions
+            "role-create",
+            "role-edit",
+            "role-delete",
+            "role-view",
+            
+            // Room permissions
+            "room-create",
+            "room-edit",
+            "room-delete",
+            "room-view",
+            
+            // Room number permissions
+            "room-number-create",
+            "room-number-edit",
+            "room-number-delete",
+            "room-number-view",
+            
+            // Permission management
+            "permission-create",
+            "permission-edit",
+            "permission-delete",
+            "permission-view"
         ];
-        foreach ($permission as $key => $permission) {
-            Permission::create(["name" => $permission]); 
+        
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(["name" => $permission]);
         }
     }
 }
