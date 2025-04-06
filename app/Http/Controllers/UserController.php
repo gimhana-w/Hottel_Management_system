@@ -11,6 +11,14 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+   
+        $this->middleware(['permission:user-create'])->only(['create', 'store']);
+        $this->middleware(['permission:user-edit'])->only(['edit', 'update']);
+        $this->middleware(['permission:user-delete'])->only(['destroy']);
+        $this->middleware(['permission:user-list|user-create|user-edit|user-delete'])->only(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -91,7 +99,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
 
         $user->save();
- $user ->syncroles($request->roles);
+         $user ->syncroles($request->roles);
 
         return redirect()->route('user.index')->with('success', 'User updated successfully!');
     }
@@ -101,6 +109,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User deleted successfully!');
     }
 }

@@ -1,3 +1,4 @@
+
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white sidebar collapse" id="sidebarCollapse" style="width: 280px; height: 100vh;">
     <div class="d-flex align-items-center mb-3">
         <a href="/" class="d-flex align-items-center text-white text-decoration-none flex-grow-1">
@@ -68,6 +69,15 @@
             <a href="#" class="nav-link text-white py-3">
                 <i class="bi bi-calendar me-2"></i>Calendar
             </a>
+        
+        </li>
+        <li class="nav-item">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="nav-link text-white py-3 border-0 bg-transparent">
+                    <i class="bi bi-box-arrow-right me-2"></i>Log Out
+                </button>
+            </form>
         </li>
     </ul>
 </div>

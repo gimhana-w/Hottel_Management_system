@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\DashboardController;
+use Spatie\Permission\Models\Role;
 
 class AuthManager extends Controller
 {
@@ -17,7 +17,8 @@ class AuthManager extends Controller
     }
 
     function singUp(){
-        return view('singUp');
+        $roles = Role::all();
+        return view('singUp', compact('roles'));
     }
 
     function dashboard(){
@@ -47,24 +48,39 @@ class AuthManager extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required'
+            'password' => 'required',
+            'role' => 'required|exists:roles,name'
         ]); 
 
-        $data['name'] = $request->name;
-        $data['email'] = $request->email;
-        $data['password'] = Hash::make($request->password);
-        $user = User::create($data);
-        if($user){
-            return redirect(route('login'))->with('success', 'User created successfully');
+        try {
+            // Create the user
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+            
+            // Get the role
+            $role = Role::where('name', $request->role)->first();
+            
+            if (!$role) {
+                throw new \Exception('Selected role does not exist');
+            }
+
+            // Assign role to user
+            $user->assignRole($role);
+
+            return redirect(route('login'))->with('success', 'Registration successful! Please login.');
+            
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'Registration failed. ' . $e->getMessage()]);
         }
-        return redirect(route('register'))->withErrors([
-            'email' => 'User creation failed',
-        ]); 
     }
-
     function logout(){
         Session::flush();
         Auth::logout();
-        return redirect(route('login'));
+        return redirect()->route('login');
     }
 }

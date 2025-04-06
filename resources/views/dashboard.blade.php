@@ -1,7 +1,6 @@
 @extends('layout')
 @section('title', 'Dashboard')
 @section('content')
-
 <div class="d-flex">
     <!-- Sidebar -->
     @include('include.sidebar')
@@ -236,4 +235,3 @@
     </script>
 @endpush
 
-@endsection

@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Session;
 
 class RoomController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:room-create'])->only(['create', 'store']);
+        $this->middleware(['permission:room-edit'])->only(['edit', 'update']);
+        $this->middleware(['permission:room-delete'])->only(['destroy']);
+        $this->middleware(['permission:room-list|room-create|room-edit|room-delete'])->only(['index', 'show']);
+    }
     public function index()
     {
         $rooms = Room::all();

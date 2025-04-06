@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:role-create'])->only(['create', 'store']);
+        $this->middleware(['permission:role-edit'])->only(['edit', 'update']);
+        $this->middleware(['permission:role-delete'])->only(['destroy']);
+        $this->middleware(['permission:role-list|role-create|role-edit|role-delete'])->only(['index', 'show']);
+    } 
+        
+
     /**
      * Display a listing of the resource.
      */
@@ -24,7 +32,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::all();
-        return view('roles.create' , compact('permissions'));
+        return view('roles.create', compact('permissions'));
     }
 
     /**
@@ -32,13 +40,13 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request ->validate([
+        $request->validate([
             "name" => "required"
         ]);
 
         $role = Role::create(["name" => $request->name]);
         $role->syncPermissions($request->permissions);
-        return redirect()->route("roles.index")->with("success", "Role created successfully!"); 
+        return redirect()->route("roles.index")->with("success", "Role created successfully!");
     }
 
     /**
@@ -65,17 +73,16 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request ->validate([
+        $request->validate([
             "name" => "required"
-        
         ]);
         $role = Role::findById($id);
         $role->name = $request->name;
-        $role->save(); 
-        
+        $role->save();
+
         $role->syncPermissions($request->permissions);
 
-        return redirect()->route("roles.index")->with("success", "Role update successfully!"); 
+        return redirect()->route("roles.index")->with("success", "Role update successfully!");
     }
 
     /**

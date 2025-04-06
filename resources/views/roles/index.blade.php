@@ -14,7 +14,9 @@
                             <div class="card-body">
                                 <div class="container">
                                 <h2>Role Management</h2>
+                                @can('role-create')
                                  <a href="{{ route('roles.create') }}" class="btn btn-primary">Add Role</a>
+                                @endcan
 
         @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -34,12 +36,18 @@
                 <td>{{ $roles->id }}</td>
                 <td>{{ $roles->name }}</td>
                 <td>
+                    
                     <a href="{{ route('roles.edit', $roles->id) }}" class="btn ">Edit</a>
+                    @can('role-edit')
                     <a href="{{ route('roles.edit', $roles->id) }}" class="btn btn-warning">Edit</a>
+                    @endcan
+
+                    @can('role-delete')
                     <form action="{{ route('roles.destroy', $roles->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    @endcan
                     </form>
                 </td>
             </tr>
